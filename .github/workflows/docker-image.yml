@@ -55,25 +55,20 @@ jobs:
     - name: Start containers
       run: |
         docker-compose -f docker-compose.yaml up -d
-        sleep 15  # wait for services to be up
+        sleep 30  # Ensure all services are up
 
-    - name: Check MongoDB logs for debugging
+    - name: Check backend container logs
+      run: docker-compose -f docker-compose.yaml logs backend
+
+    - name: Check MongoDB logs
       run: docker-compose -f docker-compose.yaml logs mongo_db
 
     - name: Check MongoDB health status
-      run: |
-        for i in {1..10}; do
-          if docker-compose -f docker-compose.yaml exec mongo_db mongosh --eval 'db.runCommand("ping").ok'; then
-            echo "MongoDB is up and running"
-            break
-          else
-            echo "Waiting for MongoDB to be healthy"
-            sleep 5
-          fi
-        done
+      run: docker-compose -f docker-compose.yaml exec mongo_db mongosh --eval 'db.runCommand("ping").ok'
 
     - name: Run backend tests
-      run: docker-compose -f docker-compose.yaml exec backend npm test
+      run: |
+        docker-compose -f docker-compose.yaml run backend npm test
       env:
         MONGODB_URI: mongodb://mongo_db:27017/my_db
 
