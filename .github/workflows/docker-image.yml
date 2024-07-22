@@ -58,12 +58,12 @@ jobs:
         sleep 15  # wait for services to be up
 
     - name: Check MongoDB logs for debugging
-      run: docker-compose -f docker-compose.yaml logs db_container
+      run: docker-compose -f docker-compose.yaml logs mongo_db
 
     - name: Check MongoDB health status
       run: |
         for i in {1..10}; do
-          if docker-compose -f docker-compose.yaml exec db_container mongosh --eval 'db.runCommand("ping").ok'; then
+          if docker-compose -f docker-compose.yaml exec mongo_db mongosh --eval 'db.runCommand("ping").ok'; then
             echo "MongoDB is up and running"
             break
           else
