@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mongo:
+      mongo_db:
         image: mongo:latest
         ports:
           - 27017:27017
@@ -58,15 +58,15 @@ jobs:
         sleep 15  # wait for services to be up
 
     - name: Check MongoDB logs for debugging
-      run: docker-compose -f docker-compose.yaml logs mongo
+      run: docker-compose -f docker-compose.yaml logs mongo_db
 
     - name: Check MongoDB health status
-      run: docker-compose -f docker-compose.yaml exec mongo mongosh --eval 'db.runCommand("ping").ok'
+      run: docker-compose -f docker-compose.yaml exec db_container mongosh --eval 'db.runCommand("ping").ok'
 
     - name: Run backend tests
       run: docker-compose -f docker-compose.yaml exec backend_container npm test
       env:
-        MONGODB_URI: mongodb://mongo:27017/my_db
+        MONGODB_URI: mongodb://mongo_db:27017/my_db
 
     - name: Stop and remove containers
       run: docker-compose -f docker-compose.yaml down
