@@ -64,7 +64,7 @@ jobs:
       run: docker-compose -f docker-compose.yaml logs mongo_db
 
     - name: Check MongoDB health status
-      run: docker-compose -f docker-compose.yaml exec mongo_db mongosh --eval 'db.runCommand("ping").ok'
+      run: docker-compose -f docker-compose.yaml run --rm mongo_db mongosh --eval 'db.runCommand("ping").ok'
 
     - name: Run backend tests
       run: |
