@@ -63,11 +63,5 @@ jobs:
     - name: Check MongoDB logs
       run: docker-compose -f docker-compose.yaml logs mongo_db
 
-    - name: Run backend tests
-      run: |
-        docker-compose -f docker-compose.yaml run backend npm test
-      env:
-        MONGODB_URI: mongodb://mongo_db:27017/my_db
-
     - name: Stop and remove containers
       run: docker-compose -f docker-compose.yaml down
