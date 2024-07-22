@@ -42,7 +42,7 @@ jobs:
         context: ./Backend
         file: ./Backend/Dockerfile
         push: true
-        tags: yourusername/datas-backend:latest
+        tags: amalfranci/datas-backend:latest
 
     - name: Build and push frontend Docker image
       uses: docker/build-push-action@v2
@@ -50,7 +50,7 @@ jobs:
         context: ./frontend
         file: ./frontend/Dockerfile
         push: true
-        tags: yourusername/datas-frontend:latest
+        tags: amalfranci/datas-frontend:latest
 
     - name: Run backend tests
       run: |
