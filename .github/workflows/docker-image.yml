@@ -57,13 +57,6 @@ jobs:
         docker-compose -f docker-compose.yaml up -d
         sleep 30  # Ensure all services are up
 
-    - name: Wait for MongoDB to be ready
-      run: |
-        until docker-compose -f docker-compose.yaml run --rm mongo_db mongosh --eval 'db.runCommand("ping").ok'; do
-          echo "Waiting for MongoDB to be ready..."
-          sleep 10
-        done
-
     - name: Check backend container logs
       run: docker-compose -f docker-compose.yaml logs backend
 
