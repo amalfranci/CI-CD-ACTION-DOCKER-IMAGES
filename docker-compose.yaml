@@ -7,6 +7,8 @@ services:
     restart: always
     volumes:
       - mongo_db:/data/db
+    networks:
+      - my_network
 
   backend:
     container_name: backend_container
@@ -26,6 +28,8 @@ services:
        PASS: phnooorrcrmxcpih
     depends_on:
       - mongo_db
+    networks:
+      - my_network
 
   frontend:
     container_name: frontend_container
@@ -39,6 +43,12 @@ services:
     volumes:
       - ./frontend:/frontend
       - /frontend/node_modules
+    networks:
+      - my_network
 
 volumes:
   mongo_db: {}
+
+networks:
+  my_network:
+    driver: bridge
