@@ -15,7 +15,7 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd "mongosh --eval 'db.runCommand("ping").ok'" 
+          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok'"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
@@ -52,10 +52,18 @@ jobs:
         push: true
         tags: amalfranci/datas-frontend:latest
 
-    - name: Run backend tests
+    - name: Check MongoDB logs for debugging
       run: |
         docker-compose -f docker-compose.yaml up -d
         sleep 15  # wait for services to be up
+        docker-compose -f docker-compose.yaml logs mongo
+
+    - name: Check MongoDB health status
+      run: |
+        docker-compose -f docker-compose.yaml exec mongo_container mongosh --eval 'db.runCommand("ping").ok'
+
+    - name: Run backend tests
+      run: |
         docker-compose -f docker-compose.yaml exec backend_container npm test
       env:
         MONGODB_URI: mongodb://mongo:27017/my_db
