@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+
+  backend:
+    container_name: backend_container
+    build: ./Backend
+    ports:
+      - "4001:4000"
+    env_file:
+      - .env  
+    environment:
+       PORT: 4000
+       KEY: jwttokenkey
+       MONGODB_URI: mongodb://mongo_db:27017
+       DB_NAME: my_db
+       HOST: smtp.gmail.com
+       SERVICE: gmail
+       EMAIL: lookup621@gmail.com
+       PASS: phnooorrcrmxcpih
+    depends_on:
+      - mongo_db
+
+  frontend:
+    container_name: frontend_container
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend 
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+
+volumes:
+  mongo_db: {}

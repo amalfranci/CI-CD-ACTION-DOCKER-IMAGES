@@ -30,24 +30,24 @@ const HomePage = () => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/user/check-auth");
+        const res = await axios.get("http://localhost:4001/user/check-auth");
         if (res.data.authenticated) {
           dispatch(setUser(res.data.userData));
         } else {
           dispatch(clearUser());
-          toast.error("Authentication failed. Please log in.");
-          navigate("/login");
+          //   toast.error("Authentication failed. Please log in.");
+          //   navigate("/login");
         }
       } catch (error) {
         console.error(error);
-        toast.error("An error occurred while checking authentication.");
-        navigate("/login");
+        // toast.error("An error occurred while checking authentication.");
+        // navigate("/login");
       }
     };
 
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/user/");
+        const res = await axios.get("http://localhost:4001/user/");
         setPosts(res.data);
       } catch (error) {
         console.error(error);
@@ -85,15 +85,15 @@ const HomePage = () => {
     try {
       if (editing) {
         await axios.put(
-          `http://localhost:4000/user/update/${currentPost._id}`,
+          `http://localhost:4001/user/update/${currentPost._id}`,
           currentPost
         );
         toast.success("Post updated successfully!");
       } else {
-        await axios.post("http://localhost:4000/user/create", currentPost);
+        await axios.post("http://localhost:4001/user/create", currentPost);
         toast.success("Post created successfully!");
       }
-      setPosts(await (await axios.get("http://localhost:4000/user/")).data);
+      setPosts(await (await axios.get("http://localhost:4001/user/")).data);
       handleClose();
     } catch (error) {
       console.error(error);
@@ -109,8 +109,8 @@ const HomePage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/user/delete/${id}`);
-      setPosts(await (await axios.get("http://localhost:4000/user/")).data);
+      await axios.delete(`http://localhost:4001/user/delete/${id}`);
+      setPosts(await (await axios.get("http://localhost:4001/user/")).data);
       toast.success("Post deleted successfully!");
     } catch (error) {
       console.error(error);
@@ -120,7 +120,7 @@ const HomePage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:4000/user/logout");
+      await axios.post("http://localhost:4001/user/logout");
       dispatch(clearUser());
       navigate("/login");
       toast.success("Logged out successfully!");

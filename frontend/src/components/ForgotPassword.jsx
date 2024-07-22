@@ -10,7 +10,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/user/forgot-password",
+        "http://localhost:4001/user/forgot-password",
         { email }
       );
       setMessage(res.data.msg);

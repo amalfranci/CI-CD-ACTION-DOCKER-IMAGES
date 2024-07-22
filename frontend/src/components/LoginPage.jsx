@@ -40,7 +40,7 @@ function LoginPage() {
 
     if (validateForm()) {
       try {
-        const res = await axios.post("http://localhost:4000/user/login", {
+        const res = await axios.post("http://localhost:4001/user/login", {
           email,
           password,
         });

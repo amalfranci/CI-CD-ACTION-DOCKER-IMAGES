@@ -12,7 +12,7 @@ const VerifyEmail = () => {
     const verifyEmail = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/user/verify/${token}`
+          `http://localhost:4001/user/verify/${token}`
         );
         console.log(res);
         setMessage(res.data.msg);

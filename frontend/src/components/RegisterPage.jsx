@@ -37,7 +37,7 @@ function RegisterPage() {
     e.preventDefault();
     try {
       if (validateForm()) {
-        const res = await axios.post("http://localhost:4000/user/register", {
+        const res = await axios.post("http://localhost:4001/user/register", {
           name,
           email,
           password,

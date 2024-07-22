@@ -13,7 +13,7 @@ const ResetPassword = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/user/reset-password",
+        "http://localhost:4001/user/reset-password",
         { token, newPassword }
       );
       if (res.data.msg) {

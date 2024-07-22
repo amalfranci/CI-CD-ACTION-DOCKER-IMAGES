@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import  mongoose from "mongoose";
 
 
 const dbConn= async() => {
     
     try {
-       await  mongoose.connect(process.env.DB_URL)
+       await  mongoose.connect(process.env.MONGODB_URI)
 
         console.log("Database Connected Successfully")
     }
